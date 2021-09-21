@@ -8,3 +8,9 @@ CREATE TABLE animals (
     neutered BOOLEAN,
     weight_kg DECIMAL
 );
+
+-- Second Milestone
+
+ALTER TABLE
+public.animals 
+ADD COLUMN IF NOT EXISTS species VARCHAR(100)
