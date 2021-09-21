@@ -90,3 +90,8 @@ SELECT species, AVG(escape_attempts)
 FROM public.animals
 WHERE date_of_birth BETWEEN 'JAN-01-1990' AND 'DEC-31-2000'
 GROUP BY species;
+
+-- Third Milestone
+
+
+
