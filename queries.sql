@@ -15,3 +15,58 @@ SELECT * FROM animals WHERE neutered;
 SELECT * FROM animals WHERE name != 'Gabumon';
 
 SELECT * FROM animals WHERE weight_kg BETWEEN 10.4 AND 17.3;
+
+-- second milestone
+
+BEGIN;
+
+ALTER TABLE
+public.animals
+DROP COLUMN species;
+
+SELECT * FROM animals;
+
+ROLLBACK;
+
+SELECT * FROM animals;
+
+
+BEGIN;
+
+UPDATE public.animals
+SET species = 'digimon'
+WHERE name ~'[A-Za-z]+mon';
+
+UPDATE public.animals
+SET species = 'pokemon'
+WHERE species IS NULL;
+
+COMMIT;
+
+
+BEGIN;
+
+DELETE FROM public.animals;
+
+ROLLBACK;
+
+
+BEGIN;
+
+DELETE FROM public.animals
+WHERE date_of_birth > 'JAN-01-2022';
+
+SAVEPOINT SP2;
+
+UPDATE public.animals
+SET weight_kg = weight_kg * -1;
+
+ROLLBACK TO SP2;
+
+UPDATE public.animals
+SET weight_kg = weight_kg * -1
+WHERE weight_kg < 0;
+
+SELECT * FROM public.animals;
+
+COMMIT;
