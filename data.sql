@@ -31,3 +31,88 @@ VALUES ('Boarmon', 'JUN-07-2005', 7, TRUE, 20.4);
 
 INSERT INTO public.animals (name , date_of_birth , escape_attempts , neutered , weight_kg)
 VALUES ('Blossom', 'OCT-13-1998', 3, TRUE, 17);
+
+-- Third Milestone
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Sam Smith', 34);
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Jennifer Orwell', 19);
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Bob', 45);
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Melody Pond', 77);
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Dean Winchester', 14);
+
+INSERT INTO public.owners (full_name, age)
+VALUES ('Jodie Whittaker', 38);
+
+
+INSERT INTO public.species (name)
+VALUES ('Pokemon');
+
+INSERT INTO public.species (name)
+VALUES ('Digimon');
+
+
+UPDATE public.animals
+SET species_id = public.species.id
+FROM public.species
+WHERE public.animals.name ~'[A-Za-z]+mon'
+  AND species.name ~'Digimon';
+
+UPDATE public.animals
+SET species_id = public.species.id
+FROM public.species
+WHERE public.animals.species_id IS NULL
+  AND species.name ~'Pokemon';
+
+
+UPDATE public.animals
+SET owner_id = public.owners.id
+FROM public.owners
+WHERE public.animals.name = 'Agumon'
+  AND public.owners.full_name = 'Sam Smith';
+
+
+UPDATE public.animals
+SET owner_id = public.owners.id
+FROM public.owners
+WHERE public.animals.name = 'Gabumon'
+  AND public.owners.full_name = 'Jennifer Orwell'
+  OR public.animals.name = 'Pikachu'
+  AND public.owners.full_name = 'Jennifer Orwell';
+
+
+UPDATE public.animals
+SET owner_id = public.owners.id
+FROM public.owners
+WHERE public.animals.name = 'Devimon'
+  AND public.owners.full_name = 'Bob'
+  OR public.animals.name = 'Plantmon'
+  AND public.owners.full_name = 'Bob';
+
+
+UPDATE public.animals
+SET owner_id = public.owners.id
+FROM public.owners
+WHERE public.animals.name = 'Charmander'
+  AND public.owners.full_name = 'Melody Pond'
+  OR public.animals.name = 'Squirtle'
+  AND public.owners.full_name = 'Melody Pond'
+  OR public.animals.name = 'Blossom'
+  AND public.owners.full_name = 'Melody Pond';
+
+
+UPDATE public.animals
+SET owner_id = public.owners.id
+FROM public.owners
+WHERE public.animals.name = 'Angemon'
+  AND public.owners.full_name = 'Dean Winchester'
+  OR public.animals.name = 'Boarmon'
+  AND public.owners.full_name = 'Dean Winchester';

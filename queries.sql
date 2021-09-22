@@ -90,3 +90,53 @@ SELECT species, AVG(escape_attempts)
 FROM public.animals
 WHERE date_of_birth BETWEEN 'JAN-01-1990' AND 'DEC-31-2000'
 GROUP BY species;
+
+-- Third Milestone
+
+SELECT name
+FROM public.animals
+JOIN owners ON animals.owner_id = owners.id
+WHERE owners.full_name = 'Melody Pond';
+
+SELECT public.animals.name
+FROM public.animals
+JOIN public.species ON animals.species_id = public.species.id
+WHERE public.species.name = 'Pokemon';
+
+SELECT public.owners.full_name, public.animals.name
+FROM public.owners
+LEFT JOIN public.animals ON public.owners.id = public.animals.owner_id;
+
+SELECT public.species.name, COUNT(animals)
+FROM public.animals
+JOIN public.species ON public.animals.species_id = public.species.id
+GROUP BY public.species.name;
+
+SELECT public.animals.name
+FROM public.animals
+JOIN public.species ON public.animals.species_id = public.species.id
+JOIN public.owners ON public.animals.owner_id = public.owners.id
+WHERE public.species.name = 'Digimon' AND public.owners.full_name = 'Jennifer Orwell';
+
+SELECT public.animals.name
+FROM public.animals
+JOIN public.owners ON public.animals.owner_id = public.owners.id
+WHERE public.animals.escape_attempts = 0 AND public.owners.full_name = 'Dean Winchester';
+
+SELECT MAX(mycount.count),
+       mycount.name
+FROM
+  (SELECT COUNT(animals),
+          public.owners.full_name as name
+   FROM public.animals
+   JOIN public.owners ON public.animals.owner_id = public.owners.id
+   GROUP BY public.owners.full_name) AS mycount
+GROUP BY mycount.name
+HAVING MAX(mycount.count) =
+  (SELECT MAX(mycount.count)
+   FROM
+     (SELECT COUNT(animals),
+             public.owners.full_name as name
+      FROM public.animals
+      JOIN public.owners ON public.animals.owner_id = public.owners.id
+      GROUP BY public.owners.full_name) AS mycount);
