@@ -61,7 +61,6 @@ CREATE TABLE public.visits (
     "date" date NULL,
     vet_id int NULL,
     animal_id int NULL,
-    CONSTRAINT visits_pk PRIMARY KEY (vet_id,animal_id),
     CONSTRAINT visits_fk_1 FOREIGN KEY (vet_id) REFERENCES public.vets(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT visits_fk FOREIGN KEY (animal_id) REFERENCES public.animals(id) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
