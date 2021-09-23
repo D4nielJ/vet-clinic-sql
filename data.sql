@@ -132,14 +132,26 @@ INSERT INTO public.vets ("name",age,date_of_graduation)
 VALUES ('Jack Harkness',38,'2008-06-08'); 
 
 
-INSERT INTO public.specializations (vet_id,species_id)
-VALUES (1,2);
+INSERT INTO specializations (species_id, vet_id)
+SELECT s.id, v.id
+FROM species s
+JOIN vets v
+ON s.name = 'Pokemon' AND v.name = 'William Tatcher';
 
-INSERT INTO public.specializations (vet_id,species_id)
-VALUES (3,1);
+INSERT INTO specializations (species_id, vet_id) 
+SELECT s.id, v.id 
+FROM species s 
+JOIN vets v 
+ON s.name = 'Pokemon' AND v.name = 'Stephanie Mendez';
 
-INSERT INTO public.specializations (vet_id,species_id)
-VALUES (3,2);
+INSERT INTO specializations (species_id, vet_id) 
+SELECT s.id, v.id 
+FROM species s 
+JOIN vets v 
+ON s.name = 'Digimon' AND v.name = 'Stephanie Mendez';
 
-INSERT INTO public.specializations (vet_id,species_id)
-VALUES (4,2); 
+INSERT INTO specializations (species_id, vet_id) 
+SELECT s.id, v.id 
+FROM species s 
+JOIN vets v 
+ON s.name = 'Digimon' AND v.name = 'Jack Harkness';
