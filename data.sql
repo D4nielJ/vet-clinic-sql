@@ -116,3 +116,30 @@ WHERE public.animals.name = 'Angemon'
   AND public.owners.full_name = 'Dean Winchester'
   OR public.animals.name = 'Boarmon'
   AND public.owners.full_name = 'Dean Winchester';
+
+-- Fourth Milestone
+
+INSERT INTO public.vets ("name",age,date_of_graduation)
+VALUES ('William Tatcher',45,'2000-04-23');
+
+INSERT INTO public.vets ("name",age,date_of_graduation)
+VALUES ('Maisy Smith',26,'2019-01-17');
+
+INSERT INTO public.vets ("name",age,date_of_graduation)
+VALUES ('Stephanie Mendez',64,'1981-05-04');
+
+INSERT INTO public.vets ("name",age,date_of_graduation)
+VALUES ('Jack Harkness',38,'2008-06-08'); 
+
+
+INSERT INTO public.specializations (vet_id,species_id)
+VALUES (1,2);
+
+INSERT INTO public.specializations (vet_id,species_id)
+VALUES (3,1);
+
+INSERT INTO public.specializations (vet_id,species_id)
+VALUES (3,2);
+
+INSERT INTO public.specializations (vet_id,species_id)
+VALUES (4,2); 
