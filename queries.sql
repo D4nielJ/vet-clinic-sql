@@ -147,6 +147,13 @@ HAVING MAX(mycount.count) =
 
 --  Who was the last animal seen by William Tatcher?
 
+SELECT v.date, a.name as pokemon, v2."name" as vet 
+FROM visits v 
+JOIN animals a ON v.animal_id = a.id 
+JOIN vets v2 ON v.vet_id = v2.id
+where v2."name" = 'William Tatcher'
+order by v."date" desc limit 1;
+
 --  How many different animals did Stephanie Mendez see?
 
 --  List all vets and their specialties, including vets with no specialties.
