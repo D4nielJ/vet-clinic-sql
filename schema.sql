@@ -63,4 +63,13 @@ CREATE TABLE public.visits (
     animal_id int NULL,
     CONSTRAINT visits_fk_1 FOREIGN KEY (vet_id) REFERENCES public.vets(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT visits_fk FOREIGN KEY (animal_id) REFERENCES public.animals(id) ON DELETE CASCADE ON UPDATE CASCADE
-); 
+);
+
+-- Create index for visits.animal_id
+CREATE INDEX visits_animal_id_idx ON public.visits USING btree (animal_id);
+
+-- Create index for visits.vet_id;
+CREATE INDEX visits_vet_id_idx ON public.visits USING btree (vet_id);
+
+-- Create index for owners.email;
+CREATE INDEX owners_email_idx ON public.owners USING btree (email);
