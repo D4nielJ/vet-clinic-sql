@@ -1,7 +1,7 @@
 /* Database schema to keep the structure of entire database. */
 
 CREATE
-TABLE animals
+TABLE public.animals
 (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(100),
@@ -14,38 +14,34 @@ TABLE animals
 -- Second Milestone
 
 ALTER TABLE
-animals 
+public.animals 
 ADD COLUMN IF NOT EXISTS species VARCHAR(100); 
 
 -- Third Milestone
 
 CREATE
-TABLE owners
+TABLE public.owners
 (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     full_name VARCHAR(100),
     age INT
 );
 
-CREATE
-TABLE species (
-    id int NOT NULL GENERATED ALWAYS AS IDENTITY,
-    name varchar(100);
-);
-
 ALTER TABLE
-animals
+public.animals
 DROP COLUMN species;
 
-ALTER TABLE animals add column species_id int NULL;
-ALTER TABLE animals add column owner_id int NULL;
+ALTER TABLE
+public.animals
+ADD COLUMN IF NOT EXISTS species_id INT REFERENCES public.species(id);
 
-ALTER TABLE animals ADD CONSTRAINT animals_fk_1 FOREIGN KEY (species_id) REFERENCES species(id);
-ALTER TABLE animals ADD CONSTRAINT animals_fk_2 FOREIGN KEY (owner_id) REFERENCES owners(id);
+ALTER TABLE
+public.animals
+ADD COLUMN IF NOT EXISTS owner_id INT REFERENCES public.owners(id);
 
 -- Fourth Milestone
 
-CREATE TABLE vets (
+CREATE TABLE public.vets (
     id int NOT NULL GENERATED ALWAYS AS IDENTITY,
     "name" varchar(100) NULL,
     age int NULL,
@@ -53,18 +49,27 @@ CREATE TABLE vets (
     CONSTRAINT vets_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE specializations (
+CREATE TABLE public.specializations (
     vet_id int NOT NULL,
     species_id int NOT NULL,
     CONSTRAINT specializations_pk PRIMARY KEY (vet_id,species_id),
-    CONSTRAINT specializations_fk FOREIGN KEY (vet_id) REFERENCES vets(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT specializations_fk_1 FOREIGN KEY (species_id) REFERENCES species(id) ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT specializations_fk FOREIGN KEY (vet_id) REFERENCES public.vets(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT specializations_fk_1 FOREIGN KEY (species_id) REFERENCES public.species(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE visits (
-    "date_of_visits" date NULL,
+CREATE TABLE public.visits (
+    "date" date NULL,
     vet_id int NULL,
     animal_id int NULL,
-    CONSTRAINT visits_fk_1 FOREIGN KEY (vet_id) REFERENCES vets(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT visits_fk FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT visits_fk_1 FOREIGN KEY (vet_id) REFERENCES public.vets(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT visits_fk FOREIGN KEY (animal_id) REFERENCES public.animals(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- Create index for visits.animal_id
+CREATE INDEX visits_animal_id_idx ON public.visits USING btree (animal_id);
+
+-- Create index for visits.vet_id;
+CREATE INDEX visits_vet_id_idx ON public.visits USING btree (vet_id);
+
+-- Create index for owners.email;
+CREATE INDEX owners_email_idx ON public.owners USING btree (email);
