@@ -27,6 +27,12 @@ TABLE public.owners
     age INT
 );
 
+CREATE
+TABLE public.species (
+    id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name varchar(100);
+);
+
 ALTER TABLE
 public.animals
 DROP COLUMN species;
@@ -58,7 +64,7 @@ CREATE TABLE public.specializations (
 );
 
 CREATE TABLE public.visits (
-    "date" date NULL,
+    "date_of_visits" date NULL,
     vet_id int NULL,
     animal_id int NULL,
     CONSTRAINT visits_fk_1 FOREIGN KEY (vet_id) REFERENCES public.vets(id) ON DELETE CASCADE ON UPDATE CASCADE,
